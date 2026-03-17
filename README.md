@@ -1,8 +1,8 @@
-# 🎯 Customer Churn Prediction - End-to-End ML Project
+# Customer Churn Prediction - End-to-End ML Project
 
 A comprehensive machine learning solution for predicting customer churn in SaaS subscription services. This project demonstrates industry best practices in data science, from initial data exploration to production-ready model deployment.
 
-## 📊 Project Overview
+## Project Overview
 
 This project builds a predictive model to identify customers likely to cancel their subscription, enabling proactive retention strategies. The solution includes:
 
@@ -16,58 +16,58 @@ This project builds a predictive model to identify customers likely to cancel th
 
 The dataset is **synthetic subscription data** mimicking real-world SaaS customer behavior: billing, engagement, support, and content usage. The target (**Churn**) is **imbalanced**; we emphasize **recall**, **F1**, and **PR-AUC** and use stratified splits plus class weighting in training.
 
-## 🚀 Key Features
+## Key Features
 
-### ✨ Machine Learning Pipeline
+### Machine Learning Pipeline
 - **Automated Data Cleaning**: Missing value imputation, outlier detection, and categorical encoding
 - **Comprehensive EDA**: Statistical analysis, correlation studies, and advanced visualizations
 - **Smart Feature Engineering**: 20+ engineered features including engagement scores and risk indicators
 - **Model Comparison**: 7 different algorithms with hyperparameter tuning
 - **Advanced Evaluation**: ROC curves, calibration plots, SHAP analysis, and business impact metrics
 
-### 📈 Business Intelligence
+### Business Intelligence
 - **Churn Risk Scoring**: Probability-based customer segmentation
 - **Financial Impact Analysis**: ROI calculations and cost-benefit analysis
 - **Actionable Insights**: Feature importance and retention strategy recommendations
 - **Interactive Reports**: HTML dashboards with comprehensive project summaries
 
-### 🔧 Technical Excellence
+### Technical Excellence
 - **Modular Architecture**: Clean, reusable code with comprehensive documentation
 - **Scalable Design**: Efficient processing for large datasets
 - **Best Practices**: Cross-validation, feature selection, and model interpretation
 - **Production Ready**: Model persistence, monitoring, and deployment capabilities
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Customer-Churn/
-├── 📊 data/
+├── data/
 │   ├── train.csv                    # Raw training data
 │   ├── test.csv                     # Raw test data
 │   ├── data_descriptions.csv        # Feature descriptions
 │   ├── train_cleaned.csv            # Processed training data
 │   └── *_processed.csv              # Feature-engineered datasets
 │
-├── 🧠 src/
+├── src/
 │   ├── data_cleaning.py             # Data preprocessing pipeline
 │   ├── eda.py                       # Exploratory data analysis
 │   ├── feature_engineering.py       # Feature creation and selection
 │   ├── model_building.py            # ML model training and tuning
 │   └── model_evaluation.py          # Comprehensive model assessment
 │
-├── 📊 plots/
+├── plots/
 │   ├── churn_distribution.png       # Target variable analysis
 │   ├── correlation_heatmap.png      # Feature correlation matrix
 │   ├── model_comparison.png         # Algorithm performance comparison
 │   ├── roc_curves_comparison.png    # ROC curve analysis
 │   └── shap/                        # SHAP interpretability plots
 │
-├── 🤖 models/
+├── models/
 │   ├── Random_Forest.joblib         # Trained Random Forest model
 │   ├── XGBoost.joblib              # Trained XGBoost model
 │   └── model_scores.joblib          # Performance metrics
 │
-├── 📋 reports/
+├── reports/
 │   ├── complete_project_report.html # Comprehensive project summary
 │   └── model_evaluation_report.html # Detailed model analysis
 │
@@ -77,7 +77,7 @@ Customer-Churn/
 └── README.md                        # Project documentation
 ```
 
-## 🔄 End-to-End Pipeline & Architecture
+## End-to-End Pipeline & Architecture
 
 ### Pipeline Steps (in order)
 
@@ -167,7 +167,7 @@ flowchart TB
     O1 --> O3
 ```
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -202,43 +202,43 @@ flowchart TB
    streamlit run streamlit_app.py
    ```
 
-## 📊 Dataset Information
+## Dataset Information
 
 The dataset contains **customer subscription data** with the following features:
 
-### 🎯 Target Variable
+### Target Variable
 - **Churn**: Binary indicator (1 = churned, 0 = retained)
 
-### 📋 Feature Categories
+### Feature Categories
 
-**📊 Account Information**
+**Account Information**
 - `AccountAge`: Customer tenure in months
 - `MonthlyCharges`: Monthly subscription fee
 - `TotalCharges`: Lifetime customer value
 - `SubscriptionType`: Service tier (Basic/Standard/Premium)
 
-**💳 Billing & Payment**
+**Billing & Payment**
 - `PaymentMethod`: Payment processing method
 - `PaperlessBilling`: Digital billing preference
 
-**📱 Usage & Engagement**
+**Usage & Engagement**
 - `ViewingHoursPerWeek`: Content consumption hours
 - `AverageViewingDuration`: Session length in minutes
 - `ContentDownloadsPerMonth`: Monthly download activity
 - `WatchlistSize`: Number of saved items
 
-**⭐ Satisfaction & Support**
+**Satisfaction & Support**
 - `UserRating`: Service satisfaction (1-5 scale)
 - `SupportTicketsPerMonth`: Customer service interactions
 
-**🎬 Content Preferences**
+**Content Preferences**
 - `ContentType`: Preferred content category
 - `GenrePreference`: Favorite content genre
 - `DeviceRegistered`: Primary viewing device
 
-## 🚀 Usage Guide
+## Usage Guide
 
-### 🔄 Running Individual Components
+### Running Individual Components
 
 **Data Cleaning Only**
 ```python
@@ -272,7 +272,7 @@ model_builder = ChurnModelBuilder()
 results = model_builder.run_complete_modeling_pipeline(X_train, y_train, X_test, y_test)
 ```
 
-### 🎯 Making Predictions
+### Making Predictions
 
 ```python
 # Load trained model
@@ -289,7 +289,7 @@ medium_risk = (churn_probability > 0.3) & (churn_probability <= 0.7)
 low_risk = churn_probability <= 0.3
 ```
 
-## 📊 Model Metrics
+## Model Metrics
 
 Metrics reported for the best-performing model (e.g. class-weighted XGBoost with threshold tuning):
 
@@ -314,7 +314,7 @@ Example performance (illustrative):
 | **Recall** | 75%+ |
 | **F1-Score** | 76%+ |
 
-## 💼 Business Metrics
+## Business Metrics
 
 Business impact is quantified for stakeholder reporting and ROI justification:
 
@@ -330,41 +330,41 @@ Business impact is quantified for stakeholder reporting and ROI justification:
 | **Net benefit** | Value from retained churners minus cost of retention campaign |
 | **Lift** | Improvement in churn rate in targeted segment vs baseline |
 
-### 🎯 Business Impact (summary)
+### Business Impact (summary)
 
 - **Cost savings**: Reduce churn-related losses (e.g. 30–40% of avoidable churn)
 - **Retention efficiency**: Target top 20% at-risk customers for highest impact
 - **ROI**: Positive return when retention cost < value of saved customers
 - **Segmentation**: High / medium / low risk bands (e.g. by churn probability) for prioritization
 
-## 🔍 Key Insights & Features
+## Key Insights & Features
 
-### 🚨 Top Churn Indicators
+### Top Churn Indicators
 1. **Low Engagement**: Minimal viewing hours and content interaction
 2. **Support Issues**: High frequency of support tickets
 3. **Payment Problems**: Frequent billing-related contacts
 4. **Service Dissatisfaction**: Low user ratings
 5. **Account Age**: New customers (< 6 months) at higher risk
 
-### 💡 Actionable Recommendations
+### Actionable Recommendations
 
-**🎯 High-Risk Customer Actions**
+**High-Risk Customer Actions**
 - Personalized retention offers
 - Proactive customer success outreach
 - Service quality improvement initiatives
 - Enhanced onboarding for new customers
 
-**📊 Monitoring Strategy**
+**Monitoring Strategy**
 - Track engagement metrics weekly
 - Monitor support ticket trends
 - Implement early warning systems
 - A/B test retention campaigns
 
-## 🔧 Technical Architecture
+## Technical Architecture
 
 The **End-to-End Pipeline & Architecture** section above describes the full flow (data → validation → preprocessing → feature engineering → training → evaluation → artifacts → monitoring). Below is a component-level breakdown.
 
-### 🏗️ Pipeline Components
+### Pipeline Components
 
 1. **Data Preprocessing**
    - Missing value imputation using statistical methods
@@ -391,7 +391,7 @@ The **End-to-End Pipeline & Architecture** section above describes the full flow
    - **Business Metrics**: Cost-benefit analysis and ROI calculation
    - **Robustness Testing**: Cross-validation and segment analysis
 
-### ⚙️ Configuration Options
+### Configuration Options
 
 **Feature Engineering Parameters**
 ```python
@@ -413,34 +413,34 @@ model_config = {
 }
 ```
 
-## 📈 Advanced Features
+## Advanced Features
 
-### 🔍 Model Interpretability
+### Model Interpretability
 - **SHAP Analysis**: Feature contribution explanations
 - **Partial Dependence Plots**: Feature effect visualization
 - **Local Explanations**: Individual prediction breakdowns
 - **Global Insights**: Population-level pattern analysis
 
-### 💼 Business Intelligence
+### Business Intelligence
 - **Customer Segmentation**: Risk-based grouping strategies
 - **Retention ROI Calculator**: Investment impact analysis
 - **Campaign Optimization**: Targeted intervention strategies
 - **Performance Monitoring**: Model drift detection
 
-### 📊 Reporting & Visualization
+### Reporting & Visualization
 - **Interactive Dashboards**: HTML-based comprehensive reports
 - **Executive Summaries**: High-level business impact metrics
 - **Technical Documentation**: Detailed methodology explanations
 - **Visual Analytics**: Charts, plots, and statistical summaries
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Here's how you can help:
 
-1. **🐛 Bug Reports**: Submit issues with detailed descriptions
-2. **✨ Feature Requests**: Suggest improvements and new capabilities
-3. **🔧 Code Contributions**: Fork, develop, and submit pull requests
-4. **📖 Documentation**: Help improve guides and examples
+1. **Bug Reports**: Submit issues with detailed descriptions
+2. **Feature Requests**: Suggest improvements and new capabilities
+3. **Code Contributions**: Fork, develop, and submit pull requests
+4. **Documentation**: Help improve guides and examples
 
 ### Development Setup
 ```bash
@@ -457,7 +457,7 @@ black src/ main.py
 flake8 src/ main.py
 ```
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Dataset**: Synthetic subscription data mimicking real-world SaaS customer behavior (billing, engagement, support)
 - **Libraries**: Scikit-learn, XGBoost, SHAP, Pandas, Matplotlib, Streamlit
@@ -466,6 +466,4 @@ flake8 src/ main.py
 
 ---
 
-**⭐ If this project helped you, please consider giving it a star!**
-
-*Built with ❤️ for the data science community*
+If this project helped you, please consider giving it a star. Built for the data science community.
