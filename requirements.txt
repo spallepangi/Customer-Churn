@@ -56,3 +56,6 @@ flake8>=4.0.0
 # Documentation (Optional)
 sphinx>=4.5.0
 sphinx-rtd-theme>=1.0.0
+
+# App
+streamlit>=1.34

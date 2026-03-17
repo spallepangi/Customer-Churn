@@ -6,10 +6,15 @@ A comprehensive machine learning solution for predicting customer churn in SaaS 
 
 This project builds a predictive model to identify customers likely to cancel their subscription, enabling proactive retention strategies. The solution includes:
 
-- **Complete ML Pipeline**: Data cleaning → EDA → Feature engineering → Model building → Evaluation
+- **Complete ML Pipeline**: Data validation → Preprocessing → Feature engineering → Model training → Evaluation → Monitoring
 - **Multiple Algorithms**: Logistic Regression, Random Forest, Gradient Boosting, XGBoost, SVM, and more
+- **Class Imbalance Handling**: Class weights, SMOTE, undersampling, threshold tuning (best: class-weighted XGBoost + threshold tuning)
 - **Advanced Analytics**: SHAP interpretability, business impact analysis, and comprehensive visualizations
-- **Production Ready**: Automated pipeline with model persistence and monitoring capabilities
+- **Production Ready**: Automated pipeline with model persistence, Streamlit dashboard, and monitoring capabilities
+
+### Dataset Source
+
+The dataset is **synthetic subscription data** mimicking real-world SaaS customer behavior: billing, engagement, support, and content usage. The target (**Churn**) is **imbalanced**; we emphasize **recall**, **F1**, and **PR-AUC** and use stratified splits plus class weighting in training.
 
 ## 🚀 Key Features
 
@@ -67,8 +72,99 @@ Customer-Churn/
 │   └── model_evaluation_report.html # Detailed model analysis
 │
 ├── main.py                          # Complete pipeline execution
+├── streamlit_app.py                 # Streamlit dashboard (EDA, model, evaluation, monitoring)
 ├── requirements.txt                 # Python dependencies
 └── README.md                        # Project documentation
+```
+
+## 🔄 End-to-End Pipeline & Architecture
+
+### Pipeline Steps (in order)
+
+| Step | Stage | Description |
+|------|--------|-------------|
+| 1 | **Data load** | Read raw `train.csv` / `test.csv`; validate schema and types |
+| 2 | **Data validation** | Required columns, dtypes, missing-rate checks, unexpected categories |
+| 3 | **Preprocessing** | Missing value imputation, type correction, IQR outlier handling, categorical encoding |
+| 4 | **Feature engineering** | Engagement score, financial ratios, tenure/behavior/risk indicators; optional selection & scaling |
+| 5 | **Train/validation split** | Stratified split (e.g. 80/20) to preserve churn ratio |
+| 6 | **Model training** | Train multiple algorithms (e.g. XGBoost, RF, LR); use class weights / resampling for imbalance |
+| 7 | **Threshold tuning** | Choose decision threshold to optimize F1 or recall at acceptable precision |
+| 8 | **Evaluation** | ROC/PR curves, confusion matrix, calibration; compute model & business metrics |
+| 9 | **Artifacts** | Save best model (joblib), metrics, and optional SHAP/plots |
+| 10 | **Monitoring** | Track data drift, feature drift, prediction distribution, churn rate trends |
+
+### Architecture Flow
+
+```mermaid
+flowchart LR
+    subgraph Input
+        A[Raw Data<br>train.csv / test.csv]
+    end
+
+    subgraph Validation
+        B[Schema & dtype check]
+        C[Missing / category checks]
+    end
+
+    subgraph Preprocessing
+        D[Imputation]
+        E[Outlier IQR]
+        F[Categorical encoding]
+    end
+
+    subgraph Features
+        G[Engagement / financial /<br>behavior / risk features]
+        H[Scaling & selection]
+    end
+
+    subgraph Training
+        I[Stratified split]
+        J[Class weight /<br>resampling]
+        K[Model training<br>XGBoost, RF, etc.]
+        L[Threshold tuning]
+    end
+
+    subgraph Evaluation
+        M[ROC / PR / CM /<br>Calibration]
+        N[Model metrics]
+        O[Business metrics]
+    end
+
+    subgraph Output
+        P[Saved model<br>joblib]
+        Q[Reports & plots]
+        R[Dashboard / API]
+    end
+
+    A --> B --> C --> D --> E --> F --> G --> H --> I --> J --> K --> L --> M --> N --> O --> P
+    M --> Q
+    P --> R
+```
+
+```mermaid
+flowchart TB
+    subgraph Data
+        D1[Raw CSV]
+        D2[Cleaned / processed]
+    end
+
+    subgraph ML
+        M1[Preprocessing]
+        M2[Feature engineering]
+        M3[Train model]
+        M4[Evaluate]
+    end
+
+    subgraph Deliverables
+        O1[Model artifact]
+        O2[Metrics & reports]
+        O3[Streamlit app]
+    end
+
+    D1 --> M1 --> D2 --> M2 --> M3 --> M4 --> O1
+    M4 --> O2
+    O1 --> O3
 ```
 
 ## 🛠️ Installation & Setup
@@ -99,6 +195,11 @@ Customer-Churn/
 4. **Run the Complete Pipeline**
    ```bash
    python main.py
+   ```
+
+5. **Launch the Streamlit dashboard** (EDA, model results, evaluation, monitoring)
+   ```bash
+   streamlit run streamlit_app.py
    ```
 
 ## 📊 Dataset Information
@@ -188,22 +289,53 @@ medium_risk = (churn_probability > 0.3) & (churn_probability <= 0.7)
 low_risk = churn_probability <= 0.3
 ```
 
-## 📊 Model Performance
+## 📊 Model Metrics
 
-Our best-performing model achieves:
+Metrics reported for the best-performing model (e.g. class-weighted XGBoost with threshold tuning):
+
+| Metric | Description | Target (imbalanced) |
+|--------|-------------|---------------------|
+| **ROC-AUC** | Area under ROC curve; ranking quality | ≥ 0.80 |
+| **PR-AUC** | Area under Precision–Recall curve | Preferred over ROC when positive class is rare |
+| **Accuracy** | (TP + TN) / total | Less emphasized under imbalance |
+| **Precision** | TP / (TP + FP) | Keep acceptable to limit false alarms |
+| **Recall** | TP / (TP + FN) | Maximize to catch churners |
+| **F1-Score** | Harmonic mean of precision and recall | Primary trade-off metric |
+| **Calibration** | Alignment of predicted probabilities with true rates | Monitor via calibration plot |
+
+Example performance (illustrative):
 
 | Metric | Score |
 |--------|-------|
 | **ROC-AUC** | 0.85+ |
+| **PR-AUC** | 0.70+ |
 | **Accuracy** | 82%+ |
 | **Precision** | 78%+ |
 | **Recall** | 75%+ |
 | **F1-Score** | 76%+ |
 
-### 🎯 Business Impact
-- **Cost Savings**: Reduce churn-related losses by 40%
-- **Retention Efficiency**: Target top 20% at-risk customers
-- **ROI**: Positive return on retention investment
+## 💼 Business Metrics
+
+Business impact is quantified for stakeholder reporting and ROI justification:
+
+| Business metric | Description |
+|-----------------|-------------|
+| **Churn rate** | % of customers who churn (baseline and by segment) |
+| **Cost of churn** | Revenue/customer × churned customers (lost MRR/ARR) |
+| **Retention cost** | Cost per retention action × number of targeted customers |
+| **True positives (TP)** | Churners correctly identified → can be targeted for retention |
+| **False negatives (FN)** | Missed churners → lost revenue if not acted upon |
+| **False positives (FP)** | Non-churners targeted → unnecessary retention spend |
+| **Model ROI** | (Value from retained TP − Retention cost) / Retention cost × 100 |
+| **Net benefit** | Value from retained churners minus cost of retention campaign |
+| **Lift** | Improvement in churn rate in targeted segment vs baseline |
+
+### 🎯 Business Impact (summary)
+
+- **Cost savings**: Reduce churn-related losses (e.g. 30–40% of avoidable churn)
+- **Retention efficiency**: Target top 20% at-risk customers for highest impact
+- **ROI**: Positive return when retention cost < value of saved customers
+- **Segmentation**: High / medium / low risk bands (e.g. by churn probability) for prioritization
 
 ## 🔍 Key Insights & Features
 
@@ -229,6 +361,8 @@ Our best-performing model achieves:
 - A/B test retention campaigns
 
 ## 🔧 Technical Architecture
+
+The **End-to-End Pipeline & Architecture** section above describes the full flow (data → validation → preprocessing → feature engineering → training → evaluation → artifacts → monitoring). Below is a component-level breakdown.
 
 ### 🏗️ Pipeline Components
 
@@ -329,8 +463,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **Dataset**: SaaS subscription service customer data
-- **Libraries**: Scikit-learn, XGBoost, SHAP, Pandas, Matplotlib
+- **Dataset**: Synthetic subscription data mimicking real-world SaaS customer behavior (billing, engagement, support)
+- **Libraries**: Scikit-learn, XGBoost, SHAP, Pandas, Matplotlib, Streamlit
 - **Inspiration**: Industry best practices in customer churn prediction
 - **Community**: Data science and machine learning communities
 
