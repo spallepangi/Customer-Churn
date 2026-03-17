@@ -457,22 +457,12 @@ black src/ main.py
 flake8 src/ main.py
 ```
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - **Dataset**: Synthetic subscription data mimicking real-world SaaS customer behavior (billing, engagement, support)
 - **Libraries**: Scikit-learn, XGBoost, SHAP, Pandas, Matplotlib, Streamlit
 - **Inspiration**: Industry best practices in customer churn prediction
 - **Community**: Data science and machine learning communities
-
-## 📞 Contact & Support
-
-- **Issues**: [GitHub Issues](https://github.com/your-username/Customer-Churn/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/Customer-Churn/discussions)
-- **Email**: your.email@domain.com
 
 ---
 
